@@ -20,6 +20,14 @@ case ${GPU_ARCH_TYPE} in
         GPU_IMAGE=centos:7
         DOCKER_GPU_BUILD_ARG=""
         ;;
+    cpu-cxx11-abi)
+        TARGET=final
+        DOCKER_TAG=cpu-cxx11-abi
+        LEGACY_DOCKER_IMAGE=${DOCKER_REGISTRY}/pytorch/manylinux-cpu-cxx11-abi
+        GPU_IMAGE=""
+        DOCKER_GPU_BUILD_ARG=""
+        MANY_LINUX_VERSION="cxx11-abi"
+        ;;
     cuda)
         TARGET=cuda_final
         DOCKER_TAG=cuda${GPU_ARCH_VERSION}
@@ -53,7 +61,7 @@ IMAGES=''
 DOCKER_NAME=manylinux${MANY_LINUX_VERSION}
 DOCKER_IMAGE=${DOCKER_REGISTRY}/pytorch/${DOCKER_NAME}-builder:${DOCKER_TAG}
 if [[ -n ${MANY_LINUX_VERSION} ]]; then
-    DOCKERFILE_SUFFIX=_${MANY_LINUX_VERSON}
+    DOCKERFILE_SUFFIX=_${MANY_LINUX_VERSION}
     LEGACY_DOCKER_IMAGE=''
 else
     DOCKERFILE_SUFFIX=''
